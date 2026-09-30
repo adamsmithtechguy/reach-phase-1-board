@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reach Food Group · Phase 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sage: #649281;
+      --mint: #8bd5ac;
+      --ink: #2a2f30;
+      --paper: #f5f5f5;
+      --water: url("https://reachfoodgroup.com/wp-content/uploads/2023/02/RFG_background.jpg");
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #16343a;
+      color: var(--ink);
+      font-family: "Nunito Sans", system-ui, sans-serif;
+    }
+    #viewport {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #stage {
+      width: 1600px;
+      height: 900px;
+      position: relative;
+      transform-origin: center center;
+      flex: none;
+    }
+    .slide {
+      display: none;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      text-align: center;
+    }
+    .slide.active { display: flex; flex-direction: column; }
+
+    .water {
+      background: var(--water) center 40% / cover no-repeat;
+      color: white;
+    }
+    .water .veil {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(186, 214, 204, 0.55), rgba(16, 42, 48, 0.28));
+    }
+    .water h1 { font-size: 68px; }
+    .water .lead { font-size: 28px; max-width: 1100px; }
+    .frost {
+      background: var(--water) center 30% / cover no-repeat;
+      color: var(--ink);
+    }
+    .frost .veil {
+      position: absolute;
+      inset: 0;
+      background: rgba(245, 245, 245, 0.9);
+    }
+    .sage {
+      background: var(--sage);
+      color: white;
+    }
+    .ink {
+      background: var(--ink);
+      color: white;
+    }
+    .content {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 120px 56px;
+    }
+    .bar {
+      position: relative;
+      z-index: 2;
+      height: 18px;
+      background: linear-gradient(180deg, #649281, #8bd5ac);
+      flex: none;
+    }
+    .logo-w { width: 250px; }
+    .logo-d { width: 86px; margin-bottom: 22px; }
+    h1, h2, .cinzel {
+      font-family: Cinzel, serif;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    h1 { font-size: 52px; line-height: 1.2; color: var(--sage); }
+    .water h1, .sage h1, .ink h1 { color: white; }
+    h2 {
+      font-size: 18px;
+      letter-spacing: 0.18em;
+      color: var(--sage);
+      margin-bottom: 12px;
+    }
+    .sage h2, .ink h2, .water h2 { color: white; }
+    .kicker {
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 700;
+      margin: 28px 0 14px;
+    }
+    .lead {
+      max-width: 980px;
+      margin: 22px 0 0;
+      font-size: 22px;
+      line-height: 1.55;
+    }
+    .water .lead, .sage .lead, .ink .lead { color: rgba(255,255,255,0.92); }
+    .quiet { color: #4e5a57; }
+    .grid {
+      display: grid;
+      gap: 36px;
+      width: 100%;
+      margin-top: 40px;
+    }
+    .g4 { grid-template-columns: repeat(4, 1fr); }
+    .g3 { grid-template-columns: repeat(3, 1fr); }
+    .g2 { grid-template-columns: 1fr 1fr; gap: 64px; }
+    .num {
+      font-family: Cinzel, serif;
+      font-size: 58px;
+      letter-spacing: 0.06em;
+      color: var(--sage);
+      line-height: 1;
+    }
+    .ink .num, .sage .num, .water .num { color: var(--mint); }
+    .label {
+      display: block;
+      margin-top: 10px;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      line-height: 1.35;
+    }
+    .rule {
+      width: 42px;
+      height: 1px;
+      background: var(--sage);
+      margin: 18px auto;
+    }
+    .sage .rule, .ink .rule, .water .rule { background: rgba(255,255,255,0.7); }
+    p { margin: 0; }
+    .copy {
+      font-size: 18px;
+      line-height: 1.5;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    .g2 .copy { max-width: 520px; }
+    .meta {
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+    .fine {
+      position: relative;
+      z-index: 2;
+      padding: 14px 40px 18px;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: rgba(255,255,255,0.78);
+    }
+    .lines { width: min(1080px, 100%); margin-top: 28px; }
+    .line {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 28px;
+      text-align: left;
+      padding: 13px 0;
+      border-top: 1px solid rgba(100, 146, 129, 0.35);
+      font-size: 18px;
+      line-height: 1.4;
+    }
+    .line:last-child { border-bottom: 1px solid rgba(100, 146, 129, 0.35); }
+    .line b {
+      font-family: Cinzel, serif;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 14px;
+      color: var(--sage);
+      padding-top: 3px;
+    }
+    .weeks {
+      display: grid;
+      grid-template-columns: repeat(13, 1fr);
+      gap: 8px;
+      width: 100%;
+      margin-top: 36px;
+    }
+    .week {
+      padding: 14px 0 12px;
+      border: 1px solid rgba(255,255,255,0.45);
+      font-family: Cinzel, serif;
+      font-size: 20px;
+    }
+    .week.on { background: white; color: var(--sage); border-color: white; }
+    .note {
+      max-width: 920px;
+      margin-top: 28px;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .content.work {
+      align-items: stretch;
+      text-align: left;
+      justify-content: flex-start;
+      padding: 36px 64px 24px;
+    }
+    .content.work h1 { font-size: 40px; line-height: 1.15; }
+    .content.work .kicker { margin: 0 0 8px; }
+    .content.work .lead {
+      margin: 10px 0 0;
+      max-width: 1080px;
+      font-size: 18px;
+      text-align: left;
+    }
+    .azure {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 32px;
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+      margin-top: 16px;
+    }
+    .azure .frame {
+      background: #101418;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .azure img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .stack-copy { display: flex; flex-direction: column; justify-content: center; }
+    .stack-copy p + p { margin-top: 16px; }
+    .stack-copy .body {
+      font-size: 18px;
+      line-height: 1.45;
+      max-width: 460px;
+    }
+    .sku {
+      margin-top: 22px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--sage);
+      line-height: 1.6;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      width: 100%;
+      margin-top: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+    .eyebrow {
+      font-family: Cinzel, serif;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--sage);
+      margin: 0 0 8px;
+    }
+    table.bench {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    table.bench th {
+      font-family: Cinzel, serif;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 11px;
+      color: var(--sage);
+      text-align: left;
+      padding: 0 8px 6px;
+      border-bottom: 1px solid rgba(100, 146, 129, 0.5);
+    }
+    table.bench th.n, table.bench td.n { text-align: right; }
+    table.bench td {
+      padding: 4px 8px;
+      border-bottom: 1px solid rgba(42, 47, 48, 0.08);
+      line-height: 1.2;
+    }
+    table.bench tr.top td { background: rgba(100, 146, 129, 0.14); font-weight: 700; }
+    table.bench td.kg { font-weight: 700; color: var(--sage); }
+    .band {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .band span {
+      border: 1px solid rgba(100, 146, 129, 0.45);
+      padding: 6px 8px;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+    .band b { display: block; font-weight: 700; }
+    .aside {
+      border-left: 1px solid rgba(100, 146, 129, 0.45);
+      padding-left: 22px;
+    }
+    .aside .step { margin-top: 16px; }
+    .aside .step b {
+      display: block;
+      font-family: Cinzel, serif;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--sage);
+      margin-bottom: 4px;
+    }
+    .aside .step p { font-size: 15px; line-height: 1.4; }
+    .shots {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      min-height: 0;
+    }
+    .shots figure { margin: 0; min-height: 0; display: flex; flex-direction: column; }
+    .shots img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      object-position: top center;
+      background: white;
+      border: 1px solid rgba(42, 47, 48, 0.12);
+    }
+    .shots figcaption {
+      margin-top: 6px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #4e5a57;
+    }
+    .li-copy .body { font-size: 17px; line-height: 1.45; margin-top: 14px; }
+    .mini {
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #4e5a57;
+    }
+    .bets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 26px;
+      text-align: left;
+    }
+    .bets > div,
+    .grid.g4 > div {
+      display: flex;
+      flex-direction: column;
+    }
+    .bets h2, .bets .copy { text-align: left; max-width: none; margin-left: 0; margin-right: 0; }
+    .bets .rule { margin: 14px 0; }
+    .bets .copy { font-size: 16px; }
+    .bets .done {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(100, 146, 129, 0.4);
+      font-size: 15px;
+      line-height: 1.4;
+    }
+    .bets .done b {
+      display: block;
+      font-family: Cinzel, serif;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--sage);
+      margin-bottom: 6px;
+    }
+    .gov {
+      margin-top: 22px;
+      font-size: 15px;
+      line-height: 1.45;
+      color: #3e4a47;
+    }
+    .sea {
+      background: #101418 url("media/sea-to-plate.jpg") center 42% / cover no-repeat;
+      color: white;
+    }
+    .sea .veil {
+      background: linear-gradient(90deg, rgba(12, 28, 32, 0.42) 0%, rgba(12, 28, 32, 0.18) 38%, rgba(12, 28, 32, 0) 64%);
+    }
+    .sea .content {
+      align-items: flex-start;
+      text-align: left;
+      justify-content: center;
+      padding: 64px 46% 64px 72px;
+    }
+    .sea h1 { color: white; font-size: 58px; letter-spacing: 0.16em; }
+    .sea .promise {
+      max-width: 520px;
+      margin-top: 16px;
+      font-size: 22px;
+      line-height: 1.45;
+    }
+    .tide {
+      display: flex;
+      gap: 28px;
+      margin-top: 32px;
+    }
+    .tide b {
+      display: block;
+      font-family: Cinzel, serif;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--mint);
+      margin-bottom: 6px;
+    }
+    .tide span { font-size: 15px; line-height: 1.35; color: rgba(255,255,255,0.88); }
+    .houses { margin-top: 22px; }
+    .houses p {
+      margin: 0;
+      padding: 12px 0;
+      border-top: 1px solid rgba(255,255,255,0.22);
+      font-size: 16px;
+      line-height: 1.4;
+      text-align: left;
+    }
+    .houses p:last-child { border-bottom: 1px solid rgba(255,255,255,0.22); }
+    .houses b {
+      display: block;
+      font-family: Cinzel, serif;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 14px;
+      color: var(--mint);
+      margin-bottom: 4px;
+    }
+    .ink .body { color: rgba(255,255,255,0.92); font-size: 18px; line-height: 1.45; margin-top: 12px; }
+    .days .num { font-size: 92px; }
+    .days .label { font-size: 18px; margin-top: 16px; }
+    .days h1 { margin-bottom: 28px; }
+    .skus {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+      width: 100%;
+    }
+    .skus li {
+      border-top: 2px solid var(--sage);
+      padding-top: 8px;
+      font-size: 14px;
+      line-height: 1.35;
+      text-align: left;
+      font-weight: 700;
+    }
+    .tins {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      width: 100%;
+      margin-top: 18px;
+      flex: 1;
+      min-height: 0;
+    }
+    .tins figure { margin: 0; display: flex; flex-direction: column; min-height: 0; }
+    .tins img {
+      width: 100%;
+      height: 460px;
+      object-fit: cover;
+      background: #111;
+    }
+    .tins figcaption {
+      margin-top: 8px;
+      font-family: Cinzel, serif;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--mint);
+    }
+    .cr-logo { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+    .cr-logo svg { flex: none; }
+    .cr-name { display: flex; flex-direction: column; line-height: 1; }
+    .cr-name span:first-child {
+      font-family: Cinzel, serif;
+      letter-spacing: 0.42em;
+      font-size: 13px;
+      color: var(--mint);
+    }
+    .cr-name span:last-child {
+      font-family: Cinzel, serif;
+      letter-spacing: 0.28em;
+      font-size: 42px;
+      margin-top: 6px;
+    }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 22px;
+      text-align: left;
+    }
+    .facts b {
+      display: block;
+      font-family: Cinzel, serif;
+      font-weight: 400;
+      font-size: 28px;
+      letter-spacing: 0.04em;
+      color: var(--sage);
+      line-height: 1;
+    }
+    .facts span { display: block; margin-top: 8px; font-size: 14px; line-height: 1.35; }
+    .shots img {
+      height: 390px;
+      object-fit: contain;
+      object-position: center top;
+      background: #fff;
+    }
+    .thumb {
+      width: 100%;
+      height: 128px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      margin-top: auto;
+      flex: none;
+    }
+    .tins figure { position: relative; overflow: hidden; background: #111; }
+    .tins img { height: 100%; flex: 1; min-height: 0; object-fit: cover; }
+    .tin-label {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      min-height: 124px;
+      padding: 16px 16px 14px;
+      text-align: left;
+      color: white;
+    }
+    .tin-label strong {
+      display: block;
+      font-family: Cinzel, serif;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 26px;
+      line-height: 1.1;
+    }
+    .tin-label em {
+      display: block;
+      margin-top: 8px;
+      font-style: normal;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .tin-label span {
+      display: block;
+      margin-top: 8px;
+      font-size: 16px;
+      line-height: 1.35;
+      letter-spacing: 0;
+      text-transform: none;
+      font-weight: 600;
+    }
+    .tin-label.house-azure { background: rgba(12, 32, 44, 0.92); }
+    .tin-label.sexy { background: rgba(8, 8, 8, 0.92); box-shadow: inset 0 2px 0 #c6a15b; }
+    .tin-label.picc { background: rgba(245, 240, 230, 0.95); color: #1c1a17; }
+    .tin-label.picc em { color: #6a5a3a; }
+    .tin-label.grill { background: rgba(22, 20, 18, 0.92); box-shadow: inset 0 2px 0 #b08d57; }
+    .points { margin-top: 14px; }
+    .points .num { font-size: 48px; }
+    .points h2 { margin-top: 4px; }
+    .points .copy { font-size: 16px; max-width: none; text-align: left; margin: 8px 0 0; }
+    .bets.four { grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 14px; }
+    .bets.four .copy, .bets.four .done { font-size: 14px; }
+    .bets.four .thumb { height: 92px; }
+    .bets.four .done { margin-top: 10px; }
+    .lid {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      top: 6%;
+      transform: translateX(-50%);
+      width: 84%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12% 14%;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.45);
+    }
+    .lid img { width: 100%; height: 72%; object-fit: contain; }
+    .lid-az { background: #f6f3ec; box-shadow: inset 0 0 0 7px #16324a, 0 14px 28px rgba(0,0,0,0.4); }
+    .lid-sf { background: #0c0c0c; box-shadow: inset 0 0 0 3px #b08d57, 0 14px 28px rgba(0,0,0,0.5); }
+    .lid-pic { background: #111; box-shadow: inset 0 0 0 3px #c4b496, 0 14px 28px rgba(0,0,0,0.5); }
+    .lid-rbg { background: #c6b497; box-shadow: inset 0 0 0 3px #f3efe6, 0 14px 28px rgba(0,0,0,0.4); }
+    .az-mark { text-align: center; color: #217f78; line-height: 1; }
+    .az-mark b {
+      display: block;
+      font-family: Cinzel, serif;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      font-size: 26px;
+      padding-left: 0.34em;
+    }
+    .az-mark small {
+      display: block;
+      margin-top: 6px;
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      font-weight: 700;
+      padding-left: 0.32em;
+    }
+    .gates .veil {
+      background: linear-gradient(180deg, rgba(6, 18, 24, 0.84) 0%, rgba(8, 26, 32, 0.72) 46%, rgba(5, 16, 22, 0.88) 100%);
+    }
+    .gates .grid.g2 > div {
+      background: rgba(4, 14, 18, 0.62);
+      padding: 16px 18px 18px;
+    }
+    .sea .read {
+      background: rgba(28, 52, 58, 0.38);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 14px 16px;
+      margin-top: 12px;
+      max-width: 620px;
+    }
+    .sea .read .promise { margin: 0; font-size: 20px; }
+    .sea .read .tide { margin-top: 0; }
+    .li-shots {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .li-shots figure { margin: 0; }
+    .li-shots img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      object-position: center top;
+      background: #fff;
+      border: 1px solid rgba(42, 47, 48, 0.12);
+      display: block;
+    }
+    .li-shots figcaption {
+      margin-top: 6px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #4e5a57;
+    }
+    .days .note { color: rgba(255,255,255,0.9); max-width: 880px; }
+
+    #chrome {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      background: rgba(22, 40, 42, 0.94);
+      z-index: 5;
+    }
+    #chrome button.nav {
+      font-family: "Nunito Sans", sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 12px;
+      border: 0;
+      background: var(--sage);
+      color: white;
+      padding: 9px 16px;
+      cursor: pointer;
+    }
+    #chrome button.nav:disabled { opacity: 0.35; cursor: default; }
+    #dots { display: flex; gap: 8px; }
+    #dots button {
+      width: 8px; height: 8px; padding: 0; border: 0; border-radius: 99px;
+      background: rgba(255,255,255,0.35); cursor: pointer;
+    }
+    #dots button.on { background: var(--mint); }
+    #chrome .hint {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    body.clean #chrome { display: none; }
+  </style>
+</head>
+<body>
+  <div id="viewport">
+    <div id="stage">
+
+      <section class="slide water active">
+        <div class="veil"></div>
+        <div class="bar"></div>
+        <div class="content">
+          <img class="logo-w" src="https://reachfoodgroup.com/wp-content/uploads/2026/07/RFG-lgo-W.svg" alt="Reach Food Group" />
+          <p class="kicker">UK retail entry</p>
+          <h1>Phase 1</h1>
+          <p class="lead">A 30-day consultancy across retail and food service. A gate at week 6. A second gate before any Phase 2.</p>
+        </div>
+        <div class="fine">For the Reach Board · via Carl Cecil · September 2026</div>
+      </section>
+
+      <section class="slide ink days">
+        <div class="content">
+          <h1>Where the days go</h1>
+          <div class="grid g4">
+            <div><div class="num">12</div><span class="label">Iceland<br>ethnic range</span></div>
+            <div><div class="num">6</div><span class="label">Booths<br>value-added</span></div>
+            <div><div class="num">10</div><span class="label">Breaded volume<br>multi-retailer</span></div>
+            <div><div class="num">2</div><span class="label">Governance<br>and reviews</span></div>
+          </div>
+          <p class="note">Food service is in Phase 1. Days move to it as that business grows.</p>
+        </div>
+      </section>
+
+      <section class="slide frost">
+        <div class="veil"></div>
+        <div class="bar"></div>
+        <div class="content work">
+          <h1>Channels. What done means.</h1>
+          <p class="lead">The aim, and the papers that prove it. A listing is the objective, not the deliverable. On food service, good is more business.</p>
+          <div class="bets four">
+            <div>
+              <h2>Iceland</h2>
+              <div class="rule"></div>
+              <p class="meta">12 days · Consultant leads</p>
+              <p class="copy">Frozen seafood for South Asian, Caribbean and African missions. Eight to ten SKUs. Own-label or a sub-brand. The aim is a range review or a trial.</p>
+              <p class="done"><b>Done</b>Category landscape. Costing and margin. A pitch in Iceland’s format. A meeting log within 48 hours. A close-out note.</p>
+              <img class="thumb" src="media/ch-iceland.jpg" alt="A frozen seafood cabinet" />
+            </div>
+            <div>
+              <h2>Booths</h2>
+              <div class="rule"></div>
+              <p class="meta">6 days · Reach leads</p>
+              <p class="copy">A warm lead is already live. Four to six lines across value-added, seasonal and coastal. Reach The Sea. The UK Director holds the buyer.</p>
+              <p class="done"><b>Done</b>Shopper briefing and a confirmed brand. A premium price architecture. Pitch and leave-behind. A ranging tracker.</p>
+              <img class="thumb" src="media/ch-booths.jpg" alt="A premium fish counter" />
+            </div>
+            <div>
+              <h2>Breaded</h2>
+              <div class="rule"></div>
+              <p class="meta">10 days · Joint lead</p>
+              <p class="copy">One or two own-label shrimp lines for the multiples. Reach leads capability at Hayes. Inside 13 weeks this is a strategy decision, not a cold listing.</p>
+              <p class="done"><b>Done</b>A retail benchmark. Three co-manufacture options, costed. One or two SKUs. Introductions at up to three retailers. A paper for the Board.</p>
+              <img class="thumb" src="media/ch-breaded.jpg" alt="Breaded shrimp" />
+            </div>
+            <div>
+              <h2>Food service</h2>
+              <div class="rule"></div>
+              <p class="meta">Growing</p>
+              <p class="copy">Restaurants and groups, in the same 30 days. Piccolino, Bar &amp; Grill, and the houses already in reach. Days move here as the orders grow.</p>
+              <p class="done"><b>Good</b>Increased business. More accounts, more volume, and the order that comes back.</p>
+              <img class="thumb" src="media/ch-foodservice.jpg" alt="Seafood leaving a restaurant pass" />
+            </div>
+          </div>
+          <p class="gov">Governance and reviews, 2 days. Kick-off at Hayes, with the conflict declaration and the NDA. A Monday note. The two gates.</p>
+        </div>
+        <div class="fine">Brand architecture with the Board in week 2 · Iceland conflict clearance, in writing, before signature</div>
+      </section>
+
+      <section class="slide water gates">
+        <div class="veil"></div>
+        <div class="content">
+          <p class="kicker" style="margin-top:0">Thirteen weeks</p>
+          <h1>Two phases. Two gates.</h1>
+          <div class="weeks">
+            <div class="week">1</div><div class="week">2</div><div class="week">3</div><div class="week">4</div><div class="week">5</div>
+            <div class="week on">6</div>
+            <div class="week">7</div><div class="week">8</div><div class="week">9</div><div class="week">10</div><div class="week">11</div><div class="week">12</div>
+            <div class="week on">13</div>
+          </div>
+          <div class="grid g2">
+            <div>
+              <h2>Week 6 · First gate</h2>
+              <p class="copy">Continue, adjust the days, or stop. I would like to stay with this, subject to it going well.</p>
+            </div>
+            <div>
+              <h2>Week 13 · Second gate</h2>
+              <p class="copy">Phase 2 only if the work has gone well, and Reach wants it to continue. Written go-ahead, or it stops.</p>
+            </div>
+          </div>
+        </div>
+        <div class="fine">Two gates · Week 6 and week 13</div>
+      </section>
+
+      <section class="slide frost">
+        <div class="veil"></div>
+        <div class="bar"></div>
+        <div class="content work">
+          <p class="kicker">How we get there</p>
+          <div class="azure">
+            <div class="stack-copy">
+              <h1>Azure</h1>
+              <p class="body">An expertly sourced seafood range, under its own name. High end. A retailer can buy it without the work of building an own-label line.</p>
+              <p class="body">That is the gap. The premium shelf is almost all own-label. A brand that is ready to list is missing, and it is achievable now.</p>
+              <p class="body">It launches on LinkedIn, so the range is visible before the first buyer meeting.</p>
+            </div>
+            <div class="frame">
+              <img src="media/azure-range.jpg" alt="Azure Seafood range: six 250g packs" />
+            </div>
+          </div>
+          <ul class="skus">
+            <li>Salmon fillets<br>with garlic butter</li>
+            <li>Cod loin<br>with lemon butter</li>
+            <li>Sea bass fillets</li>
+            <li>Tuna steaks</li>
+            <li>King prawns<br>with chilli butter</li>
+            <li>Naturally smoked haddock</li>
+          </ul>
+        </div>
+        <div class="fine">Branded route · Raw and frozen · No own-label development required</div>
+      </section>
+
+      <section class="slide ink">
+        <div class="content work">
+          <p class="kicker" style="margin-top:0">The house on the tin</p>
+          <h1>The tin is the brand</h1>
+          <p class="lead" style="color:rgba(255,255,255,0.9)">One supply. Four houses. The tin is open, so the grade is what you see.</p>
+          <div class="tins">
+            <figure>
+              <img src="media/tin-azure-open.jpg" alt="Open tin of golden oscietra" />
+              <div class="lid lid-az">
+                <div class="az-mark"><b>AZURE</b><small>SEAFOOD</small></div>
+              </div>
+              <div class="tin-label house-azure">
+                <strong>Azure</strong>
+                <em>Oscietra</em>
+                <span>Reach’s own tin. Ready to list.</span>
+              </div>
+            </figure>
+            <figure>
+              <img src="media/tin-beluga-open.jpg" alt="Open tin of black beluga" />
+              <div class="lid lid-sf">
+                <img src="media/logo-sexy-fish.png" alt="Sexy Fish" />
+              </div>
+              <div class="tin-label sexy">
+                <strong>Sexy Fish</strong>
+                <em>Beluga, 30g</em>
+                <span>Berkeley Square. Served with steamed buns. Oscietra and Siberian are on the same list.</span>
+              </div>
+            </figure>
+            <figure>
+              <img src="media/tin-piccolino-open.jpg" alt="Open tin of amber oscietra" />
+              <div class="lid lid-pic">
+                <img src="media/logo-piccolino.png" alt="Piccolino" />
+              </div>
+              <div class="tin-label picc">
+                <strong>Piccolino</strong>
+                <em>Oscietra</em>
+                <span>Italian. First restaurant, Knutsford, 1999.</span>
+              </div>
+            </figure>
+            <figure>
+              <img src="media/tin-grill-open.jpg" alt="Open tin of dark siberian roe" />
+              <div class="lid lid-rbg">
+                <img src="media/logo-rbg.png" alt="Restaurant Bar and Grill" />
+              </div>
+              <div class="tin-label grill">
+                <strong>Bar &amp; Grill</strong>
+                <em>Siberian</em>
+                <span>Steak and seafood. Individual Restaurants.</span>
+              </div>
+            </figure>
+          </div>
+        </div>
+        <div class="fine">House tins · Piccolino and Bar &amp; Grill are Individual Restaurants</div>
+      </section>
+
+      <section class="slide sea">
+        <div class="veil"></div>
+        <div class="content">
+          <div class="cr-logo">
+            <svg viewBox="0 0 72 72" width="72" height="72" aria-hidden="true">
+              <rect x="6" y="6" width="60" height="60" fill="#0c0c0c"/>
+              <rect x="31" y="12" width="10" height="48" fill="#ffffff"/>
+              <rect x="12" y="31" width="48" height="10" fill="#ffffff"/>
+              <rect x="6" y="6" width="60" height="60" fill="none" stroke="#8bd5ac" stroke-width="1.2"/>
+            </svg>
+            <svg viewBox="0 0 72 72" width="78" height="78" aria-hidden="true">
+              <circle cx="36" cy="36" r="34" fill="none" stroke="#8bd5ac" stroke-width="1.2"/>
+              <path d="M12 40c7-9 13-9 20 0s13 9 20 0 10-7 8-1" fill="none" stroke="#ffffff" stroke-width="1.6"/>
+              <path d="M16 50c6-7 11-7 17 0s11 7 17 0" fill="none" stroke="#8bd5ac" stroke-width="1.3"/>
+            </svg>
+            <div class="cr-name"><span>CORNISH</span><span>REACH</span></div>
+          </div>
+          <div class="read">
+            <p class="promise">Cornish seafood, reaching you in 24 hours. Fished, landed, and on the menu the same day.</p>
+          </div>
+          <div class="read">
+            <div class="tide">
+              <div><b>Fished</b><span>Caught for that day’s order, not for a depot.</span></div>
+              <div><b>Landed</b><span>On the quay in Cornwall, the same tide.</span></div>
+              <div><b>Served</b><span>On a menu within 24 hours.</span></div>
+            </div>
+          </div>
+          <div class="read">
+            <div class="tide">
+              <div><b>On the fish</b><span>Put Cornish Reach onto the Azure fish itself.</span></div>
+              <div><b>On its own</b><span>A separate operation. A sub-brand, or a subcompany.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="fine">Cornish Reach · Two ways to run it · Sea to plate in 24 hours</div>
+      </section>
+
+      <section class="slide frost">
+        <div class="veil"></div>
+        <div class="bar"></div>
+        <div class="content work">
+          <p class="kicker">Breading and batter</p>
+          <h1>The one that should have landed</h1>
+          <p class="lead">Breaded and battered cod and haddock, made at VDTG in Vietnam, for Iceland. It never made it. It should have. The opportunity is still there.</p>
+          <div class="bets">
+            <div>
+              <h2>VDTG</h2>
+              <div class="rule"></div>
+              <p class="meta">Van Duc Tien Giang · Vietnam</p>
+              <p class="copy">A plant that already runs breading and batter, and processes cold-water fish, including cod and haddock. This is not a cold start.</p>
+              <img class="thumb" src="media/br-cod.jpg" alt="Breaded cod fillets" />
+            </div>
+            <div>
+              <h2>Iceland</h2>
+              <div class="rule"></div>
+              <p class="meta">A project that stopped</p>
+              <p class="copy">Coated cod and haddock, out of that site, for the Iceland fixture. The work was real. The listing never happened. That was the miss.</p>
+              <img class="thumb" src="media/br-haddock.jpg" alt="Battered haddock fillets" />
+            </div>
+            <div>
+              <h2>The site</h2>
+              <div class="rule"></div>
+              <p class="meta">Flexible</p>
+              <p class="copy">Crumb, batter, species and pack can change. Cod and haddock are the opening. The same flexibility is a large part of the breaded channel in Phase 1.</p>
+              <img class="thumb" src="media/br-line.jpg" alt="A seafood coating line" />
+            </div>
+          </div>
+        </div>
+        <div class="fine">VDTG · Vietnam · Breaded and battered cod and haddock · Still an open door</div>
+      </section>
+
+      <section class="slide frost">
+        <div class="veil"></div>
+        <div class="bar"></div>
+        <div class="content work">
+          <p class="kicker">Staying on the fixture</p>
+          <h1>The market is already mapped</h1>
+          <p class="lead">Cooked and peeled king prawns, core line. Count, treatment and price, from the Tesco review.</p>
+          <table class="bench">
+            <thead>
+              <tr><th>Retailer</th><th>Pack</th><th>Count</th><th>Treatment</th><th class="n">Shelf</th><th class="n">£ / kg</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Iceland</td><td>300g</td><td>50/80 per lb</td><td>Non-phosphate</td><td class="n">£5.00</td><td class="n kg">16.67</td></tr>
+              <tr><td>Tesco</td><td>170g</td><td>57/66 per lb</td><td>Non-phosphate</td><td class="n">£3.40</td><td class="n kg">20.00</td></tr>
+              <tr><td>Sainsbury’s</td><td>180g</td><td>60/80 per lb</td><td>Untreated</td><td class="n">£3.00</td><td class="n kg">16.67</td></tr>
+              <tr><td>Asda</td><td>200g</td><td>71/90 per lb</td><td>Untreated</td><td class="n">£3.68</td><td class="n kg">18.40</td></tr>
+              <tr><td>Morrisons</td><td>200g</td><td>71/90 per lb</td><td>Untreated</td><td class="n">£3.69</td><td class="n kg">18.45</td></tr>
+              <tr><td>Aldi · The Fishmonger</td><td>170g</td><td>51/60 per lb</td><td>Non-phosphate</td><td class="n">£2.69</td><td class="n kg">15.82</td></tr>
+              <tr><td>Lidl · Ocean Sea</td><td>750g</td><td>71/90 per lb</td><td>Non-phosphate</td><td class="n">£9.99</td><td class="n kg">13.32</td></tr>
+              <tr><td>Farmfoods</td><td>1.3kg</td><td>31/40 per lb</td><td>Phosphate</td><td class="n">£19.99</td><td class="n kg">15.38</td></tr>
+              <tr class="top"><td>Waitrose</td><td>200g</td><td>31/50 per lb</td><td>Untreated</td><td class="n">£5.50</td><td class="n kg">27.50</td></tr>
+              <tr class="top"><td>M&amp;S · Honduran</td><td>200g</td><td>41/50 per lb</td><td>Untreated</td><td class="n">£5.50</td><td class="n kg">27.50</td></tr>
+            </tbody>
+          </table>
+          <p class="mini">Premium cooked jumbo, £ per kilo: Iceland £22.92, treated, 240g. Tesco Finest £23.78. Sainsbury’s Taste the Difference £23.33. Asda Exceptional £23.75. Morrisons The Best £23.33. Those four own-label lines are untreated. Aldi Specially Selected and Lidl Deluxe sit back at £16.61. Raw peeled follows the cooked core: multiples £16.67 to £20, Waitrose £26.25, M&amp;S £27.50.</p>
+        </div>
+        <div class="fine">Benchmarking Prawns Market Review (Tesco) · Cooked and Raw · Shelf price, not a promotion</div>
+      </section>
+
+      <section class="slide frost">
+        <div class="veil"></div>
+        <div class="bar"></div>
+        <div class="content work">
+          <p class="kicker">Outreach</p>
+          <h1>The page is already there</h1>
+          <p class="lead">4,480 followers. LinkedIn is how we do the next three things. I can help run it.</p>
+          <div class="grid g3 points">
+            <div>
+              <div class="num">1</div>
+              <h2>Share products</h2>
+              <p class="copy">Put Azure, Cornish Reach and the ranges on the page. A buyer should see the product before the meeting.</p>
+            </div>
+            <div>
+              <div class="num">2</div>
+              <h2>When supply fails</h2>
+              <p class="copy">Reach out when a kitchen or a retailer comes unstuck. Say that Reach can step in, and say it to the people who need it.</p>
+            </div>
+            <div>
+              <div class="num">3</div>
+              <h2>Grow range</h2>
+              <p class="copy">Use the page to open the next line. Not another company announcement. A wider range, in front of the people who buy it.</p>
+            </div>
+          </div>
+          <div class="li-shots">
+            <figure>
+              <img src="media/li-tsts.png" alt="Reach Food Group LinkedIn post on the TSTS Wholesale acquisition" />
+              <figcaption>The business · 72 reactions</figcaption>
+            </figure>
+            <figure>
+              <img src="media/li-vennessa.png" alt="Reach Food Group LinkedIn post on Vennessa Tsui’s award shortlist" />
+              <figcaption>The people · 203 reactions</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="fine">LinkedIn · Share the product · Step in when supply fails · Grow the range</div>
+      </section>
+
+      <section class="slide frost">
+        <div class="veil"></div>
+        <div class="bar"></div>
+        <div class="content work">
+          <p class="kicker">In the pipeline</p>
+          <h1>Four conversations</h1>
+          <div class="grid g4" style="margin-top: 22px; text-align: left;">
+            <div>
+              <h2>Tesco Local</h2>
+              <div class="rule" style="margin-left:0"></div>
+              <p class="meta">In the pipeline</p>
+              <p class="copy" style="margin:12px 0 0; max-width:none">Range review with the agent who manages the Tesco Local business.</p>
+              <img class="thumb" src="media/cv-tesco.jpg" alt="A local supermarket seafood cabinet" />
+            </div>
+            <div>
+              <h2>Iceland</h2>
+              <div class="rule" style="margin-left:0"></div>
+              <p class="meta">In the pipeline</p>
+              <p class="copy" style="margin:12px 0 0; max-width:none">The Weld Foods buyer has agreed to visit the site. London first.</p>
+              <img class="thumb" src="media/cv-iceland.jpg" alt="A site visit in a seafood warehouse" />
+            </div>
+            <div>
+              <h2>East London</h2>
+              <div class="rule" style="margin-left:0"></div>
+              <p class="meta">In the pipeline</p>
+              <p class="copy" style="margin:12px 0 0; max-width:none">A listening group with communities in East London, before the range is closed.</p>
+              <img class="thumb" src="media/cv-east.jpg" alt="An East London market street" />
+            </div>
+            <div>
+              <h2>Individual Restaurants</h2>
+              <div class="rule" style="margin-left:0"></div>
+              <p class="meta">Chief executive</p>
+              <p class="copy" style="margin:12px 0 0; max-width:none">Andrew Garton. Piccolino and Restaurant Bar &amp; Grill. Get him to the site. He is in London often. Grow the business with him, including the cash-flow offer.</p>
+              <img class="thumb" src="media/cv-restaurants.jpg" alt="A restaurant table set for a meeting" />
+            </div>
+          </div>
+        </div>
+        <div class="fine">Four conversations in the pipeline · London is where this starts</div>
+      </section>
+
+      <section class="slide ink">
+        <div class="content work">
+          <p class="kicker" style="margin-top:0">The order of the work</p>
+          <h1>How Phase 1 lands</h1>
+          <div class="lines" style="margin-top: 22px;">
+            <div class="line" style="border-color: rgba(255,255,255,0.2)"><b style="color: var(--mint)">1 · Fixture</b><span>The prawn benchmark is done. Further ranges are built the same way, against a shelf.</span></div>
+            <div class="line" style="border-color: rgba(255,255,255,0.2)"><b style="color: var(--mint)">2 · Azure</b><span>Launch the branded range on LinkedIn. It can be bought without an own-label development.</span></div>
+            <div class="line" style="border-color: rgba(255,255,255,0.2)"><b style="color: var(--mint)">3 · The page</b><span>Put product on the company page, and use it for outreach ahead of the meetings.</span></div>
+            <div class="line" style="border-color: rgba(255,255,255,0.2)"><b style="color: var(--mint)">4 · London</b><span>The Tesco Local review, and the Iceland buyer on site. Both are booked.</span></div>
+            <div class="line" style="border-color: rgba(255,255,255,0.2)"><b style="color: var(--mint)">5 · Listen</b><span>An East London listening group, so the gap is heard before the range is closed.</span></div>
+            <div class="line" style="border-color: rgba(255,255,255,0.2)"><b style="color: var(--mint)">6 · The buyer</b><span>Take the range in. The listing stays with the customer. It is the objective, not the deliverable.</span></div>
+          </div>
+        </div>
+        <div class="fine">Inside the 30 days · Days can still move toward the clearer return</div>
+      </section>
+
+      <section class="slide frost">
+        <div class="veil"></div>
+        <div class="bar"></div>
+        <div class="content work">
+          <p class="kicker">Working capital</p>
+          <h1>We carry the stock</h1>
+          <p class="lead">This releases cash in their business. Reach makes the profit over time. They may pay a little more. They do not tie cash up in a back room.</p>
+          <div class="bets">
+            <div>
+              <h2>The offer</h2>
+              <div class="rule"></div>
+              <p class="copy">Reach holds the stock. Their cash stays in the business. The product is there when the service needs it.</p>
+            </div>
+            <div>
+              <h2>The long game</h2>
+              <div class="rule"></div>
+              <p class="copy">Once the stock and the cash sit with Reach, a kitchen does not go back to filling a room. That is the profit, earned over time. It is not a win in week one.</p>
+            </div>
+            <div>
+              <h2>The limit</h2>
+              <div class="rule"></div>
+              <p class="copy">Hold only what turns. The premium has to cover the cost of carrying it. Do not fund a line that has not earned its place.</p>
+            </div>
+          </div>
+        </div>
+        <div class="fine">Their cash stays in the business · Reach holds the stock · Profit over time</div>
+      </section>
+
+      <section class="slide frost">
+        <div class="veil"></div>
+        <div class="bar"></div>
+        <div class="content">
+          <h1>This is the proposal</h1>
+          <div class="lines">
+            <div class="line"><b>Day cap</b><span>30 consultant days for the whole of Phase 1, across 13 weeks.</span></div>
+            <div class="line"><b>Allocation</b><span>Iceland 12 · Booths 6 · Breaded volume 10 · Governance 2. A starting focus, not a lock.</span></div>
+            <div class="line"><b>Food service</b><span>In Phase 1. Days move to it, from the retail work, as that business grows.</span></div>
+            <div class="line"><b>Deliverables</b><span>Propositions, pitches, introductions and follow-up. Ranging decisions stay with the customer.</span></div>
+            <div class="line"><b>The cap</b><span>Consultancy and travel time. Pre-approved expenses are reimbursed separately.</span></div>
+            <div class="line"><b>Two gates</b><span>Week 6 and week 13. Phase 2 is a separate statement of work, and starts only with written go-ahead after the second gate.</span></div>
+          </div>
+        </div>
+        <div class="fine">Week 6 and week 13</div>
+      </section>
+
+    </div>
+  </div>
+
+  <div id="chrome">
+    <button class="nav" id="prev" type="button">Back</button>
+    <div id="dots"></div>
+    <div class="hint">Arrows · F hides this bar</div>
+    <button class="nav" id="next" type="button">Next</button>
+  </div>
+
+  <script>
+    const slides = [...document.querySelectorAll(".slide")];
+    const dots = document.getElementById("dots");
+    let i = 0;
+    slides.forEach((_, n) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "Slide " + (n + 1));
+      b.addEventListener("click", () => show(n));
+      dots.appendChild(b);
+    });
+    function show(n) {
+      i = Math.max(0, Math.min(slides.length - 1, n));
+      slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+      [...dots.children].forEach((d, idx) => d.classList.toggle("on", idx === i));
+      document.getElementById("prev").disabled = i === 0;
+      document.getElementById("next").disabled = i === slides.length - 1;
+    }
+    function fit() {
+      const chrome = document.body.classList.contains("clean") ? 0 : 48;
+      const scale = Math.min(window.innerWidth / 1600, (window.innerHeight - chrome) / 900);
+      document.getElementById("stage").style.transform = "scale(" + scale + ")";
+    }
+    document.getElementById("prev").addEventListener("click", () => show(i - 1));
+    document.getElementById("next").addEventListener("click", () => show(i + 1));
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); show(i + 1); }
+      else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(i - 1); }
+      else if (e.key === "f" || e.key === "F") { document.body.classList.toggle("clean"); fit(); }
+    });
+    window.addEventListener("resize", fit);
+    show(0);
+    fit();
+  </script>
+</body>
+</html>
